@@ -18,6 +18,7 @@ const HeaderContainer = styled.header`
   ${({ theme }) => theme.flexSet()}
   padding: 20px;
   background-color: ${({ theme }) => theme.white};
+  z-index: -10000;
 `;
 
 const LoginBox = styled.div`
