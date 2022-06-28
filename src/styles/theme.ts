@@ -1,15 +1,15 @@
 import { css } from 'styled-components';
 
 const theme = {
-  mint: '#00C7AE',
+  brown: '#AB6254',
+  middleBrown: '#E1B8A6',
+  lightBrown: '#EFDAC7',
+  ivory: '#FFE3C9',
+  deepIvory: '#BB9E93',
+  coral: '#E69F9A',
   black: '#323232',
   borderGrey: '#DBDBDB',
-  background: '#FAFAFA',
   white: '#FFFFFF',
-  vermilion: '#ff7425',
-  orange: '#FF9900',
-  opacityOrange: 'rgba(242,153,74,0.5)',
-  yellow: '#FFD66C',
   grey: 'rgba(196,196,196,0.3)',
   middleGrey: 'rgba(65,65,65,0.4)',
   deepGrey: '#828282',

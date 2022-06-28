@@ -24,7 +24,7 @@ const ProductList: React.FC = () => {
     return <h2>에러입니다. 다시 시도해주세요!</h2>;
   }
 
-  return <Wrapper>start</Wrapper>;
+  return <Wrapper style={{ backgroundColor: 'yellow', height: '2000px' }}>start</Wrapper>;
 };
 
 export default ProductList;
