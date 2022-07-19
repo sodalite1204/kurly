@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { useLocation, useSearchParams, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import Item from './Item/Item';
+
+export type CartItemType = {
+  id: number;
+  category: string;
+  description: string;
+  image: string;
+  price: number;
+  title: string;
+};
 
 const ProductList: React.FC = () => {
-  type CartItemType = {
-    id: number;
-    category: string;
-    description: string;
-    image: string;
-    price: number;
-    title: string;
+  const [isImageFocus, setIsImageFocus] = useState<boolean>(false);
+  const { category } = useParams<{ category?: string }>();
+
+  // const fetchByCategory = (category: string) => {
+  //   return axios.get(`https://fakestoreapi.com/products/${category}`);
+  // };
+
+  const getProducts = async (category?: string): Promise<CartItemType[]> => {
+    const { data } = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
+    return data;
   };
 
-  const getProducts = async (): Promise<CartItemType[]> =>
-    await (await fetch('https://fakestoreapi.com/products')).json();
-
-  const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts);
-  // if (data) {
-  //   return;
-  // }
+  const { data, isLoading, error } = useQuery<CartItemType[]>(
+    'products',
+    () => getProducts(category || ''),
+    { enabled: Boolean(category) }
+  );
+  if (data) {
+    console.log('data:', data);
+  }
 
   if (isLoading) {
     return <h2>로딩중</h2>;
@@ -28,34 +44,50 @@ const ProductList: React.FC = () => {
   }
 
   return (
-    <Wrapper style={{ backgroundColor: 'yellow', height: '2000px' }}>
+    <Wrapper>
       <Box>
-        {data &&
-          data.map(productInfo => (
-            <ItemContainer key={productInfo.id}>
-              <p>{productInfo.title}</p>
-            </ItemContainer>
-          ))}
+        {data?.map(productInfo => (
+          <Item productInfo={productInfo} key={productInfo.id} />
+        ))}
       </Box>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+export default ProductList;
+
+const Wrapper = styled.section`
   ${({ theme }) => theme.flexSet()}
 `;
 
-export default ProductList;
-
 const Box = styled.div`
   display: flex;
-  width: 1000px;
   flex-wrap: wrap;
+  width: 1000px;
 `;
+// const ItemContainer = styled.article`
+//   width: 293px;
+//   margin: 20px;
+// `;
 
-const ItemContainer = styled.div`
-  width: 280px;
-  height: 400px;
-  margin: 20px;
-  background-color: green;
-`;
+// const ItemWrapper = styled.div`
+//   height: 300px;
+//   background-color: ${({ theme }) => theme.white};
+//   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+// `;
+
+// const ItemImage = styled.img`
+//   padding: 30px;
+//   object-fit: contain;
+// `;
+
+// const ItemTitle = styled.h2`
+//   margin: 10px 0;
+//   color: ${({ theme }) => theme.brown};
+//   font-size: 20px;
+// `;
+
+// const ItemPrice = styled(ItemTitle)`
+//   font-size: 30px;
+//   font-weight: 600;
+// `;

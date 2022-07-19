@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { HiLocationMarker, HiMenu } from 'react-icons/hi';
 import { BsFillCartFill } from 'react-icons/bs';
@@ -8,9 +8,9 @@ import { BiSearch } from 'react-icons/bi';
 const MenuNav: React.FC = () => {
   const navigate = useNavigate();
 
-  const getMenuList = (category: string) => {
-    navigate(`/${category}`);
-  };
+  // const getMenuList = (category: string) => {
+  //   navigate(`/products/category/${category}`);
+  // };
   return (
     <NavContainer>
       <NavWrapper>
@@ -20,12 +20,14 @@ const MenuNav: React.FC = () => {
               {CATEGORY_DATA.map((category: string, index: number) => {
                 const isAll: boolean = category === 'all';
                 return (
-                  <CategoryName key={category + index} onClick={() => getMenuList(category)}>
-                    <MenuBox>
-                      {isAll && <MenuIcon isAll={category === 'all'} />}
-                      {category}
-                    </MenuBox>
-                  </CategoryName>
+                  <Link to={`/products/category/${category}`} key={category + index}>
+                    <CategoryName>
+                      <MenuBox>
+                        {isAll && <MenuIcon isAll={category === 'all'} />}
+                        {category}
+                      </MenuBox>
+                    </CategoryName>
+                  </Link>
                 );
               })}
             </CategoryList>
@@ -140,4 +142,10 @@ const CartIcon = styled(BsFillCartFill)`
 
 export default MenuNav;
 
-const CATEGORY_DATA: Array<string> = ['all', 'mens', 'womens', 'onepiece', 'pants'];
+const CATEGORY_DATA: Array<string> = [
+  'all',
+  "men's clothing",
+  "women's clothing",
+  'jewelery',
+  'electronics',
+];

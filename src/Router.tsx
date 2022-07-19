@@ -9,8 +9,8 @@ const Router: React.FC = () => {
     <BrowserRouter>
       <GNB />
       <Routes>
-        <Route path="/item" element={<Item />} />
-        <Route path="/" element={<ProductList />} />
+        {/* <Route path="/item" element={<Item />} /> */}
+        <Route path="/products/category/:category" element={<ProductList />} />
       </Routes>
     </BrowserRouter>
   );
